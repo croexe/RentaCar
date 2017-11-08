@@ -5,6 +5,7 @@ using System.Linq;
 using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
+using RentaCar.ViewModels;
 
 namespace RentaCar.Controllers
 {
@@ -17,17 +18,105 @@ namespace RentaCar.Controllers
         {
             _context = new ApplicationDbContext();
         }
-
+        
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();
         }
 
+        public ViewResult New()
+        {
+            var typeOfCar = _context.TypeOfCars.ToList();
+
+            var viewModel = new CarFormViewModel
+            {
+                TypeOfCar = typeOfCar
+            };
+
+            return View("CarForm", viewModel);
+        }
+
+       
+
         public ViewResult Index()
         {
-            var carses = _context.Cars.Include(c =>c.TypeOfCar).ToList();
-            return (carses);
+            var cars = _context.Cars.Include(c =>c.TypeOfCar).ToList();
+            return View(cars);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Save(Car car)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new CarFormViewModel(car)
+                {
+                  
+                    TypeOfCar = _context.TypeOfCars.ToList()
+                };
+                return View("CarForm", viewModel);
+            }
+
+            if (car.Id == 0)
+                _context.Cars.Add(car);
+            else
+            {
+                var carInDb = _context.Cars.Single(c => c.Id == car.Id);
+
+                carInDb.Name = car.Name;
+                carInDb.TypeOfCar = car.TypeOfCar;
+                carInDb.YearOfManufacture = car.YearOfManufacture;
+                carInDb.NumberInStock = car.NumberInStock;
+            }
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Cars");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var car = _context.Cars.SingleOrDefault(c => c.Id == id);
+
+                if (car == null)
+                return HttpNotFound();
+
+            var viewModel = new CarFormViewModel(car)
+            {
+                
+                TypeOfCar = _context.TypeOfCars.ToList()
+
+            };
+
+            _context.SaveChanges();
+
+            return View("CarForm", viewModel);
+        
+        }
+
+        public ViewResult Details(int id)
+        {
+            var car = _context.Cars.Include(c => c.TypeOfCar).SingleOrDefault(c => c.Id == id );
+            return View(car);
+        }
+        /*
+        public ViewResult Delete()
+        {
+            var _ca = _context.Cars.ToList();
+
+
+            foreach(Models.Car ca in _ca) _context.Cars.Remove(ca);
+
+            _context.SaveChanges();
+
+
+
+
+            return View(_ca);
+        }
+        */
 
     }
 }

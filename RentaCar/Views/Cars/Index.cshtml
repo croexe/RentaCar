@@ -6,6 +6,8 @@
 
 <h2>Cars</h2>
 
+@Html.ActionLink("New Car", "New", "Cars", null, new { @class= "btn btn-primary"})
+<p></p>
 <table class="table table-bordered table-hover">
 
     <thead>
@@ -27,7 +29,7 @@
 
             <tr>
 
-                <td>@Html.ActionLink(car.Name, )</td>
+                <td>@Html.ActionLink(car.Name, "Edit", "Cars", new { id = car.Id }, null )</td>
                 <td>@car.TypeOfCar.Type</td>
 
             </tr>

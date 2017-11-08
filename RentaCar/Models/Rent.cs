@@ -15,6 +15,7 @@ namespace RentaCar.Models
         public PaymentType PaymentType { get; set; }
         public short Fee { get; set; }
         public byte DurationInWeeks { get; set; }
+        public bool Discount { get; set; }
         public byte DiscountRate { get; set; }
         
 

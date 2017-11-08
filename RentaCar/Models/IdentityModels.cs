@@ -23,6 +23,8 @@ namespace RentaCar.Models
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Rent> Rents { get; set; }
         public DbSet<Car> Cars { get; set; }
+        public DbSet<TypeOfCar> TypeOfCars { get; set; }
+        
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

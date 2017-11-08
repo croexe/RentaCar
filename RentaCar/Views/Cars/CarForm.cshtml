@@ -1,0 +1,40 @@
+﻿@model RentaCar.ViewModels.CarFormViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<h2>@Model.Title</h2>
+
+@using(Html.BeginForm("Save", "Cars"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.TypeOfCar)
+        @Html.DropDownListFor(m => m.TypeOfCar,new SelectList(Model.TypeOfCar, "Id", "Type"), new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.YearOfManufacture)
+        @Html.TextBoxFor(m => m.YearOfManufacture, "{0:d MMM YYYY}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.YearOfManufacture)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.NumberInStock)
+        @Html.TextBoxFor(m => m.NumberInStock, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NumberInStock)
+    </div>
+    @Html.HiddenFor(m => m.Id)
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+@section scripts 
+    {
+    @Scripts.Render("~/bundles/jqueryval")
+    }
