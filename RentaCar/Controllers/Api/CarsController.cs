@@ -21,9 +21,11 @@ namespace RentaCar.Controllers.Api
         }
 
         //GET api/Cars
-        public IEnumerable<CarDto> GetCars()
+        public IHttpActionResult GetCars()
         {
-            return _context.Cars.ToList().Select(Mapper.Map<Car,CarDto>);
+            var carsDto = _context.Cars.ToList().Select(Mapper.Map<Car,CarDto>);
+
+            return Ok(carsDto);
         }
 
         //GET api/cars/1
@@ -31,10 +33,65 @@ namespace RentaCar.Controllers.Api
         {
             var car = _context.Cars.SingleOrDefault(c => c.Id == id);
 
-            if (car.Id == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+            if (car == null)
+                return NotFound();
 
             return Ok(Mapper.Map<Car, CarDto>(car));
+        }
+
+        //POST api/customers
+        [HttpPost]
+        public IHttpActionResult CreateCar(CarDto carDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var car = Mapper.Map<CarDto, Car>(carDto);
+
+            _context.Cars.Add(car);
+            _context.SaveChanges();
+
+            carDto.Id = car.Id;
+
+            return Created(new Uri(Request.RequestUri + "/" + car.Id), carDto);
+        }
+
+        //PUT api/cars/1
+        [HttpPut]
+        public IHttpActionResult UpdateCar(int id, CarDto carDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var carInDb = _context.Cars.SingleOrDefault(c => c.Id == id);
+
+            if (carInDb == null)
+                return NotFound();
+
+            Mapper.Map(carDto, carInDb);
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+        //DELETE api/cars/1
+        [HttpDelete]
+        public IHttpActionResult DeleteCar(int id)
+        {
+            var carInDb = _context.Cars.SingleOrDefault(c => c.Id == id);
+
+            if (!ModelState.IsValid)
+                return NotFound();
+
+            
+
+            
+
+            _context.Cars.Remove(carInDb);
+            _context.SaveChanges();
+
+            return Ok();
         }
     }
 }
