@@ -1,0 +1,51 @@
+﻿@model IEnumerable<RentaCar.Models.Customer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Customers</h2>
+
+@if (!Model.Any())
+{
+    <p>We dont have any customers yet.</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+
+        <thead>
+
+            <tr>
+
+                <th>Customer</th>
+                <th>Discount Rate</th>
+                <th>Payment Type</th>
+                <th>Type of Customer</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var customer in Model)
+
+            {
+
+                <tr>
+
+                    <td>@Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null)</td>
+                    <td>@customer.Rent.DiscountRate%</td>
+                    <td>@customer.Rent.PaymentType</td>
+                    <td>@customer.Rent.UserType</td>
+
+                </tr>
+
+            }
+
+        </tbody>
+
+    </table>
+}
