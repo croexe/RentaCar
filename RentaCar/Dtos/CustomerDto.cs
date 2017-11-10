@@ -20,5 +20,7 @@ namespace RentaCar.Dtos
 
         public byte RentId { get; set; }
 
+        public RentDto Rent { get; set; }
+
     }
 }

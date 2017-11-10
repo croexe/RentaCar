@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -23,7 +24,7 @@ namespace RentaCar.Controllers.Api
         //GET api/Cars
         public IHttpActionResult GetCars()
         {
-            var carsDto = _context.Cars.ToList().Select(Mapper.Map<Car,CarDto>);
+            var carsDto = _context.Cars.Include(c => c.TypeOfCar).ToList().Select(Mapper.Map<Car,CarDto>);
 
             return Ok(carsDto);
         }

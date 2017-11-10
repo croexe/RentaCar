@@ -24,6 +24,11 @@ namespace RentaCar.Controllers
             _context.Dispose();
         }
 
+        public ViewResult Index()
+        {
+            return View();
+        }
+
         public ViewResult New()
         {
             var typeOfCar = _context.TypeOfCars.ToList();
@@ -38,11 +43,7 @@ namespace RentaCar.Controllers
 
        
 
-        public ViewResult Index()
-        {
-            var cars = _context.Cars.Include(c =>c.TypeOfCar).ToList();
-            return View(cars);
-        }
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
