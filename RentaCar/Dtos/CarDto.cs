@@ -17,6 +17,8 @@ namespace RentaCar.Dtos
         [Required]
         public byte TypeOfCarId { get; set; }
 
+        public TypeOfCarDto TypeOfCar { get; set; }
+
         public DateTime YearOfManufacture { get; set; }
 
         public DateTime DateAddedToDatabase { get; set; }

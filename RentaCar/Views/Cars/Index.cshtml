@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<RentaCar.Models.Car>
+
 @{
     ViewBag.Title = "Cars";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,7 +9,7 @@
 
 @Html.ActionLink("New Car", "New", "Cars", null, new { @class= "btn btn-primary"})
 <p></p>
-<table class="table table-bordered table-hover">
+<table id="cars" class="table table-bordered table-hover">
 
     <thead>
 
@@ -16,6 +17,7 @@
 
             <th>Car</th>
             <th>Type</th>
+            <th>Delete</th>
 
         </tr>
 
@@ -23,20 +25,60 @@
 
     <tbody>
 
-        @foreach (var car in Model)
-
-        {
-
-            <tr>
-
-                <td>@Html.ActionLink(car.Name, "Edit", "Cars", new { id = car.Id }, null )</td>
-                <td>@car.TypeOfCar.Type</td>
-
-            </tr>
-
-        }
-
     </tbody>
 
 </table>
+
+@section scripts
+    {
+    <script>
+        
+        $(document).ready(function () {
+
+            var table = $("#cars").DataTable({
+
+                ajax: {
+                    url: "/api/cars",
+                    dataSrc:""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, car) {
+                            return "<a href='/cars/edit/" + car.id + "'>" + car.name + "</a>";
+                        }
+                    },
+                    {
+                        data: "typeOfCar.type"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn-link .js-delete' data-car-id=" + data + ">Delete</button>";
+                        }
+                    }
+                ]
+            });
+
+            $("#cars").on("click", ".js-delete", function () {
+                var button = $(this);
+
+                bootbox.confirm("Do you really want to delete this car?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/cars" + button.attr("data-car-id"),
+                            method: "DELETE",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+
+                        });
+                    }
+                });
+            });
+
+        });
+
+    </script>
+    }
 
