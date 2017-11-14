@@ -21,19 +21,11 @@ namespace RentaCar.Controllers.Api
         [HttpPost]
         public IHttpActionResult CreateNewRentals(NewRentalDto newRental)
         {
-            if (newRental.CarIds.Count == 0)
-                return BadRequest("No Car ID was given.");
 
-            var customer = _context.Customers.SingleOrDefault(c => c.Id == newRental.CustomerId);
-
-            if (customer == null)
-                return BadRequest("Customer ID is not Valid.");
+            var customer = _context.Customers.Single(c => c.Id == newRental.CustomerId);
 
             var cars = _context.Cars.Where(
                 m => newRental.CarIds.Contains(m.Id)).ToList();
-
-            if (cars.Count != newRental.CarIds.Count)
-                return BadRequest("One or more Car IDs are invalid.");
 
             foreach( var car in cars)
             {
