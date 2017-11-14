@@ -17,6 +17,7 @@ namespace RentaCar.App_Start
             Mapper.CreateMap<Customer, CustomerDto>();
             Mapper.CreateMap<Rent, RentDto>();
             Mapper.CreateMap<TypeOfCar, TypeOfCarDto>();
+            Mapper.CreateMap<Rental, NewRentalDto>();
 
 
             //Dto to domain

@@ -16,6 +16,7 @@ namespace RentaCar.Models
         public DbSet<Rent> Rents { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<TypeOfCar> TypeOfCars { get; set; }
+        public DbSet<Rental> Rentals { get; set; }
         
 
         public ApplicationDbContext()
