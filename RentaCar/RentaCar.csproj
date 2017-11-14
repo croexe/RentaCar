@@ -19,7 +19,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44305</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -291,13 +291,35 @@
     <Compile Include="Migrations\201711061142246_DontKnowWhat.Designer.cs">
       <DependentUpon>201711061142246_DontKnowWhat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711130942450_SeedUsers.cs" />
+    <Compile Include="Migrations\201711130942450_SeedUsers.Designer.cs">
+      <DependentUpon>201711130942450_SeedUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711131047584_AddDrivingLicenseToAplicationUser.cs" />
+    <Compile Include="Migrations\201711131047584_AddDrivingLicenseToAplicationUser.Designer.cs">
+      <DependentUpon>201711131047584_AddDrivingLicenseToAplicationUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711140922532_AddPhoneNumberToUserIdentity.cs" />
+    <Compile Include="Migrations\201711140922532_AddPhoneNumberToUserIdentity.Designer.cs">
+      <DependentUpon>201711140922532_AddPhoneNumberToUserIdentity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AccountViewModels\ExternalLoginConfirmationViewModel.cs" />
+    <Compile Include="Models\AccountViewModels\ExternalLoginListViewModel.cs" />
+    <Compile Include="Models\AccountViewModels\ForgotPasswordViewModel.cs" />
+    <Compile Include="Models\AccountViewModels\ForgotViewModel.cs" />
+    <Compile Include="Models\AccountViewModels\LoginViewModel.cs" />
+    <Compile Include="Models\AccountViewModels\RegisterViewModel.cs" />
+    <Compile Include="Models\AccountViewModels\ResetPasswordViewModel.cs" />
+    <Compile Include="Models\AccountViewModels\SendCodeViewModel.cs" />
+    <Compile Include="Models\AccountViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="Models\Car.cs" />
+    <Compile Include="Models\IdentityModels\ApplicationUser.cs" />
     <Compile Include="Models\Min18YearsIfAMember.cs" />
+    <Compile Include="Models\RoleName.cs" />
     <Compile Include="Models\TypeOfCar.cs" />
     <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IdentityModels\ApplicationDbContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Rent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -540,7 +562,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
-    <Content Include="Views\Cars\Index.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Customers\Details.cshtml" />
     <Content Include="Views\Cars\Details.cshtml" />
@@ -618,6 +639,15 @@
     <EmbeddedResource Include="Migrations\201711061142246_DontKnowWhat.resx">
       <DependentUpon>201711061142246_DontKnowWhat.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711130942450_SeedUsers.resx">
+      <DependentUpon>201711130942450_SeedUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711131047584_AddDrivingLicenseToAplicationUser.resx">
+      <DependentUpon>201711131047584_AddDrivingLicenseToAplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711140922532_AddPhoneNumberToUserIdentity.resx">
+      <DependentUpon>201711140922532_AddPhoneNumberToUserIdentity.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -640,7 +670,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50106</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50106/</IISUrl>
+          <IISUrl>https://localhost:44305/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

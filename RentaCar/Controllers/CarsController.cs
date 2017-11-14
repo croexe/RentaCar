@@ -26,9 +26,13 @@ namespace RentaCar.Controllers
 
         public ViewResult Index()
         {
-            return View();
+            if(User.IsInRole(RoleName.CanManageCars))
+            return View("List");
+
+            return View("ReadOnlyList");
         }
 
+        [Authorize(Roles = RoleName.CanManageCars)]
         public ViewResult New()
         {
             var typeOfCar = _context.TypeOfCars.ToList();
@@ -41,12 +45,9 @@ namespace RentaCar.Controllers
             return View("CarForm", viewModel);
         }
 
-       
-
-        
-
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.CanManageCars)]
         public ActionResult Save(Car car)
         {
 
@@ -77,6 +78,9 @@ namespace RentaCar.Controllers
             return RedirectToAction("Index", "Cars");
         }
 
+
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.CanManageCars)]
         public ActionResult Edit(int id)
         {
             var car = _context.Cars.SingleOrDefault(c => c.Id == id);
@@ -97,6 +101,7 @@ namespace RentaCar.Controllers
         
         }
 
+        [ValidateAntiForgeryToken]
         public ViewResult Details(int id)
         {
             var car = _context.Cars.Include(c => c.TypeOfCar).SingleOrDefault(c => c.Id == id );
