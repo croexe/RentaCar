@@ -23,6 +23,7 @@ namespace RentaCar.App_Start
             //Dto to domain
             Mapper.CreateMap<CarDto, Car>().ForMember(c => c.Id, opt => opt.Ignore());
             Mapper.CreateMap<CustomerDto, Customer>().ForMember(c => c.Id, opt => opt.Ignore());
+            Mapper.CreateMap<NewRentalDto, Rental>().ForMember(c => c.Id, opt => opt.Ignore());
 
         }
 

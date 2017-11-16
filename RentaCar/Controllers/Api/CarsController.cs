@@ -22,11 +22,20 @@ namespace RentaCar.Controllers.Api
         }
 
         //GET api/Cars
-        public IHttpActionResult GetCars()
+        public IEnumerable<CarDto> GetCars(string query = null)
         {
-            var carsDto = _context.Cars.Include(c => c.TypeOfCar).ToList().Select(Mapper.Map<Car,CarDto>);
+            var carsQuery = _context.Cars
+                .Include(c => c.TypeOfCar)
+                .Where(c => c.NumberAvailable > 0);
 
-            return Ok(carsDto);
+            if (!String.IsNullOrWhiteSpace(query))
+                carsQuery = carsQuery.Where(c => c.Name.Contains(query));
+                
+                return carsQuery
+                .ToList()
+                .Select(Mapper.Map<Car,CarDto>);
+
+            
         }
 
         //GET api/cars/1

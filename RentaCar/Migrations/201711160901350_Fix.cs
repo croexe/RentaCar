@@ -3,7 +3,7 @@ namespace RentaCar.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddRentalToDataBase : DbMigration
+    public partial class Fix : DbMigration
     {
         public override void Up()
         {
@@ -11,9 +11,9 @@ namespace RentaCar.Migrations
                 "dbo.Rentals",
                 c => new
                     {
-                        Id = c.Byte(nullable: false),
+                        Id = c.Int(nullable: false, identity: true),
                         DateRented = c.DateTime(nullable: false),
-                        DateReturned = c.DateTime(nullable: false),
+                        DateReturned = c.DateTime(),
                         Car_Id = c.Int(nullable: false),
                         Customer_Id = c.Int(nullable: false),
                     })
@@ -22,6 +22,7 @@ namespace RentaCar.Migrations
                 .ForeignKey("dbo.Customers", t => t.Customer_Id, cascadeDelete: true)
                 .Index(t => t.Car_Id)
                 .Index(t => t.Customer_Id);
+            
             
         }
         
